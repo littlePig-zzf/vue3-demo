@@ -4,12 +4,12 @@
            :class="{active: page === 'todo'}">待办事项</a> |
         <a @click="changePage('recycle')"
            :class="{active: page === 'recycle'}">回收站</a>
-        <span class="clear" @click="clear">清空</span>
+        <span class="clear"
+              @click="clear">清空</span>
     </div>
 </template>
 
 <script>
-import utils from '../utils'
 export default {
     name: 'navHeader',
     props: {
@@ -23,7 +23,8 @@ export default {
         }
 
         function clear() {
-            utils.clearAllItems()
+            // 刷新页面
+            window.location.reload()
         }
 
         return {

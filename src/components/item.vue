@@ -1,6 +1,5 @@
 <template>
-    <div class="todo-list"
-         v-if="todoList.length">
+    <div class="todo-list recycle-wrap">
         <p class="todo-list-item"
            v-for="(item, index) in todoList"
            :key="index">
@@ -14,6 +13,7 @@
             <a class="delete"
                @click="handleRecycle(index,item)">恢复</a>
         </p>
+        <p class="no-data" v-if="todoList.length === 0">暂无数据</p>
     </div>
 </template>
 
@@ -29,7 +29,7 @@ export default {
             context.emit('handle-check', index)
         }
         function handleRecycle(i, item) {
-            context.emit('handle-recycle', item)
+            context.emit('handle-recycle', i, item)
         }
         return {
             handleCheck,
@@ -39,5 +39,13 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less" scoped>
+.recycle-wrap {
+    width: 80%;
+    margin: 0 auto;
+    .no-data {
+        color: #999;
+        text-align: center;
+    }
+}
 </style>

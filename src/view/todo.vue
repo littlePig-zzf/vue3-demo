@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import ritem from '@/components/ritem'
-import { reactive } from 'vue'
+import ritem from '../components/ritem.vue'
+import { reactive, onMounted } from 'vue'
 export default {
     components: {
         ritem
@@ -30,12 +30,16 @@ export default {
         }
         function handleCheck(e) {
             data.todoList[e].checked = !data.todoList[e].checked
-            console.log(data.todoList[e].checked);
         }
         function handleDelete(i, item) {
             data.todoList.splice(i, 1)
             window.mitt.emit('addDelete', item)
         }
+        onMounted(()=>{
+            window.mitt.on('addRecycle', (obj)=>{
+                data.todoList.push(obj)
+            })
+        })
         return {
             data,
             handleInput,

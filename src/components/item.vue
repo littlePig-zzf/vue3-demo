@@ -1,51 +1,75 @@
 <template>
-    <div class="todo-list recycle-wrap">
-        <p class="todo-list-item"
-           v-for="(item, index) in todoList"
-           :key="index">
-            <input type="checkbox"
-                   class="checkbox"
-                   :id="index"
-                   :checked="item.checked"
-                   @change="handleCheck(index)">
-            <label :for="index"
-                   :class="{'delete-label': item.checked}">{{item.value}}</label>
-            <a class="delete"
-               @click="handleRecycle(index,item)">恢复</a>
-        </p>
-        <p class="no-data" v-if="todoList.length === 0">暂无数据</p>
-    </div>
+    <p class="todo-list-item">
+        <input :id="index"
+               type="checkbox"
+               class="checkbox"
+               :checked="item.checked"
+               @change="handleCheck(index)">
+        <label :for="index"
+               :class="{'delete-label': item.checked}">{{ item.value }}</label>
+        <slot />
+    </p>
 </template>
 
 <script>
 export default {
     props: {
-        todoList: {
-            type: Array
-        }
+        item: {
+            type: Object,
+            default: (() => { }),
+        },
+        index: {
+            type: Number,
+            default: 0,
+        },
     },
     setup(props, context) {
         function handleCheck(index) {
-            context.emit('handle-check', index)
-        }
-        function handleRecycle(i, item) {
-            context.emit('handle-recycle', i, item)
+            context.emit('handle-check', index);
         }
         return {
             handleCheck,
-            handleRecycle
-        }
-    }
-}
+        };
+    },
+};
 </script>
 
-<style lang="less" scoped>
-.recycle-wrap {
-    width: 80%;
-    margin: 0 auto;
-    .no-data {
-        color: #999;
-        text-align: center;
+<style lang="less">
+.todo-list {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f8f8f8;
+    &-item {
+        position: relative;
+        margin: 2px;
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid #ffe0fd;
+        background-color: #fff;
+        text-align: left;
+        &:hover {
+            background-color: #ffe0fd;
+        }
+        .checkbox {
+            margin: 0 5px;
+            vertical-align: middle;
+        }
+        .delete-label {
+            text-decoration: line-through;
+            color: #999;
+        }
+        .delete {
+            position: absolute;
+            right: 10px;
+            font-size: 12px;
+            color: #999;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        label {
+            cursor: pointer;
+        }
     }
 }
 </style>

@@ -5,16 +5,23 @@
                :value="data.todoVal"
                @input="handleInput"
                @keyup.enter="handleEnter">
-        <ritem :todoList="data.todoList" @handle-check="handleCheck" @handle-delete="handleDelete"></ritem>
+        <item v-for="(item, index) in data.todoList"
+               :key="index"
+               :index="index"
+               :item="item"
+               @handle-check="handleCheck">
+            <a class="delete"
+               @click="handleDelete(index, item)">删除</a>
+        </item>
     </div>
 </template>
 
 <script>
-import ritem from '@/components/ritem'
-import { reactive } from 'vue'
+import item from '@/components/item'
+import { reactive, onMounted } from 'vue'
 export default {
     components: {
-        ritem
+        item
     },
     setup() {
         const data = reactive({
@@ -25,17 +32,21 @@ export default {
             data.todoVal = e.target.value
         }
         function handleEnter(e) {
-            data.todoList.push({value: e.target.value, checked: false})
+            data.todoList.push({ value: e.target.value, checked: false })
             data.todoVal = ''
         }
         function handleCheck(e) {
             data.todoList[e].checked = !data.todoList[e].checked
-            console.log(data.todoList[e].checked);
         }
         function handleDelete(i, item) {
             data.todoList.splice(i, 1)
             window.mitt.emit('addDelete', item)
         }
+        onMounted(()=>{
+            window.mitt.on('addRecycle', (obj)=>{
+                data.todoList.push(obj)
+            })
+        })
         return {
             data,
             handleInput,
@@ -60,6 +71,5 @@ export default {
         font-size: 16px;
         outline: none;
     }
-   
 }
 </style>

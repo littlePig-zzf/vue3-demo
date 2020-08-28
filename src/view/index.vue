@@ -33,7 +33,6 @@ export default {
     margin-top: 20px;
     padding: 20px;
     border-radius: 10px;
-    text-align: left;
     background-color: #f8f8f8;
     &-item {
         position: relative;
@@ -42,6 +41,7 @@ export default {
         border-radius: 5px;
         border: 1px solid #ffe0fd;
         background-color: #fff;
+        text-align: left;
         &:hover {
             background-color: #ffe0fd;
         }

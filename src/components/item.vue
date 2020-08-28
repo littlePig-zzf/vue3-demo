@@ -32,5 +32,42 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
+.todo-list {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f8f8f8;
+    &-item {
+        position: relative;
+        margin: 2px;
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid #ffe0fd;
+        background-color: #fff;
+        text-align: left;
+        &:hover {
+            background-color: #ffe0fd;
+        }
+        .checkbox {
+            margin: 0 5px;
+            vertical-align: middle;
+        }
+        .delete-label {
+            text-decoration: line-through;
+            color: #999;
+        }
+        .delete {
+            position: absolute;
+            right: 10px;
+            font-size: 12px;
+            color: #999;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        label {
+            cursor: pointer;
+        }
+    }
+}
 </style>

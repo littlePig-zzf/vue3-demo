@@ -24,11 +24,9 @@ export default {
         function changePage(val) {
             context.emit('change', val);
         }
-
         function clear() {
             utils.clearAllItems();
         }
-
         return {
             changePage,
             clear,

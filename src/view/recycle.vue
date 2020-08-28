@@ -8,48 +8,49 @@
             <a class="delete"
                @click="handleRecycle(index,item)">恢复</a>
         </item>
-        <div class="no-data"
-             v-if="data.recycleItems.length === 0">
+        <div v-if="data.recycleItems.length === 0"
+             class="no-data">
             暂无数据
         </div>
     </div>
 </template>
 
 <script>
-import { onMounted, reactive } from 'vue'
-import item from '@/components/item'
+import { onMounted, reactive } from 'vue';
+import item from '@/components/item';
+
 export default {
     components: {
-        item
+        item,
     },
     setup() {
         const data = reactive({
-            recycleItems: []
-        })
+            recycleItems: [],
+        });
         function handleCheck(e) {
-            data.recycleItems[e].checked = !data.recycleItems[e].checked
+            data.recycleItems[e].checked = !data.recycleItems[e].checked;
         }
-        function handleRecycle(i, item) {
-            data.recycleItems.splice(i, 1)
-            window.mitt.emit('addRecycle', item)
+        function handleRecycle(i, citem) {
+            data.recycleItems.splice(i, 1);
+            window.mitt.emit('addRecycle', citem);
         }
         onMounted(() => {
             window.mitt.on('addDelete', (obj) => {
-                let array = []
-                data.recycleItems.forEach((item) => {
-                    array.push(item)
-                })
-                array.push(obj)
-                data.recycleItems = array
-            })
-        })
+                const array = [];
+                data.recycleItems.forEach((citem) => {
+                    array.push(citem);
+                });
+                array.push(obj);
+                data.recycleItems = array;
+            });
+        });
         return {
             data,
             handleCheck,
-            handleRecycle
-        }
-    }
-}
+            handleRecycle,
+        };
+    },
+};
 </script>
 
 <style lang="less">

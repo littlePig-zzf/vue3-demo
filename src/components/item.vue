@@ -1,13 +1,13 @@
 <template>
     <p class="todo-list-item">
-        <input type="checkbox"
+        <input :id="index"
+               type="checkbox"
                class="checkbox"
-               :id="item"
                :checked="item.checked"
                @change="handleCheck(index)">
-        <label :for="item"
-               :class="{'delete-label': item.checked}">{{item.value}}</label>
-        <slot></slot>
+        <label :for="index"
+               :class="{'delete-label': item.checked}">{{ item.value }}</label>
+        <slot />
     </p>
 </template>
 
@@ -16,20 +16,22 @@ export default {
     props: {
         item: {
             type: Object,
+            default: (() => { }),
         },
         index: {
-            type: Number
-        }
+            type: Number,
+            default: 0,
+        },
     },
     setup(props, context) {
         function handleCheck(index) {
-            context.emit('handle-check', index)
+            context.emit('handle-check', index);
         }
         return {
             handleCheck,
-        }
-    }
-}
+        };
+    },
+};
 </script>
 
 <style lang="less">

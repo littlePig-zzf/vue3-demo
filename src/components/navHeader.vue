@@ -1,37 +1,40 @@
 <template>
     <div class="nav-header">
-        <a @click="changePage('todo')"
-           :class="{active: page === 'todo'}">待办事项</a> |
-        <a @click="changePage('recycle')"
-           :class="{active: page === 'recycle'}">回收站</a>
-        <span class="clear" @click="clear">清空</span>
+        <a :class="{active: page === 'todo'}"
+           @click="changePage('todo')">待办事项</a> |
+        <a :class="{active: page === 'recycle'}"
+           @click="changePage('recycle')">回收站</a>
+        <span class="clear"
+              @click="clear">清空</span>
     </div>
 </template>
 
 <script>
-import utils from '../utils'
+import utils from '../utils';
+
 export default {
-    name: 'navHeader',
+    name: 'NavHeader',
     props: {
         page: {
-            type: String
-        }
+            type: String,
+            default: 'todo',
+        },
     },
     setup(props, context) {
         function changePage(val) {
-            context.emit('change', val)
+            context.emit('change', val);
         }
 
         function clear() {
-            utils.clearAllItems()
+            utils.clearAllItems();
         }
 
         return {
             changePage,
-            clear
-        }
-    }
-}
+            clear,
+        };
+    },
+};
 </script>
 
 <style>

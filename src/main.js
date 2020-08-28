@@ -1,9 +1,9 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import mitt from 'mitt'
-import router from './router'
+import { createApp } from 'vue';
+import mitt from 'mitt';
+import App from './App';
+import router from './router';
 
-let app = createApp(App)
-window.mitt = mitt()
+const app = createApp(App);
+window.mitt = mitt();
 
-app.use(router).mount('#app')
+app.use(router).mount('#app');

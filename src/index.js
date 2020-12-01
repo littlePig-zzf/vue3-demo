@@ -19,7 +19,9 @@ function extend() {
     const { length } = arguments;
     let deep = false;
     let i = 1;
-    let options; let copy; let src;
+    let options;
+    let copy;
+    let src;
 
     if (typeof target === 'boolean') {
         deep = target;

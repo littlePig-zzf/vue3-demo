@@ -12,12 +12,21 @@
              class="no-data">
             暂无数据
         </div>
+        <button @click="changeRef">
+            改变ref的值
+        </button>
+        <button @click="changeName">
+            改变name的值
+        </button>
     </div>
 </template>
 
 <script>
-import { onMounted, reactive } from 'vue';
+import {
+    onMounted, reactive, watch, ref,
+} from 'vue';
 import item from '@/components/item';
+// import utils from '../utils';
 
 export default {
     components: {
@@ -26,7 +35,9 @@ export default {
     setup() {
         const data = reactive({
             recycleItems: [],
+            name: '',
         });
+        const refDom = ref(0);
         function handleCheck(e) {
             data.recycleItems[e].checked = !data.recycleItems[e].checked;
         }
@@ -34,6 +45,25 @@ export default {
             data.recycleItems.splice(i, 1);
             window.mitt.emit('addRecycle', citem);
         }
+        // function storeItems(array) {
+        //     utils.setItem('recycleList', array);
+        // }
+        const stop = watch(() => {
+            console.log(data.recycleItems, refDom.value, data.name);
+        });
+        function changeRef() {
+            refDom.value = '123';
+        }
+        function changeName() {
+            stop();
+            data.name = 'zzd';
+        }
+        watch(
+            () => {
+                // console.log(data.recycleItems, refDom.value);
+            },
+        );
+
         onMounted(() => {
             window.mitt.on('addDelete', (obj) => {
                 const array = [];
@@ -46,6 +76,8 @@ export default {
         });
         return {
             data,
+            changeRef,
+            changeName,
             handleCheck,
             handleRecycle,
         };
